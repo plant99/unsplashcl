@@ -1,2 +1,2 @@
 # unsplashcl
-CLI to interact with https://unsplash.con
+CLI to interact with https://unsplash.com
