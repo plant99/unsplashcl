@@ -13,7 +13,7 @@ In DWoC, with 2 sub-projects, we'll try to build a good interface for Unsplash o
 
 [desktop-interactor](https://github.com/plant99/unsplashcl/wiki/desktop-interactor)
 
-**Please submit your applications only for above ^ projects**
+**Please submit your applications only for the projects above(^)**
 
 It would be used by devs, and users who want to download a collection.
 
