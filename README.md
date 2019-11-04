@@ -8,9 +8,12 @@ Unsplash isn't just a photo-gallery, it's a community of generous photographers 
 ## DWoC
 
 In DWoC, with 2 sub-projects, we'll try to build a good interface for Unsplash on the command-line, and build additional plugins to handle wall-papers.
+
 [unsplashcl-interactor](https://github.com/plant99/unsplashcl/wiki/unsplash-interactor)
+
 [desktop-interactor](https://github.com/plant99/unsplashcl/wiki/desktop-interactor)
-**Please submit your applications only for above projects**
+
+**Please submit your applications only for above ^ projects**
 
 It would be used by devs, and users who want to download a collection.
 
