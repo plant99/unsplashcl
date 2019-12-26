@@ -16,7 +16,7 @@ def getImage(url):
 	with open('image.jpg','wb') as f:
 		f.write(image.content)
 
-	print("Download Completed !")	
+	print("Download Completed!")	
 
 if __name__ == '__main__':
 	url = input("Give the Image URL here: ")
