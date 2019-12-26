@@ -1,36 +1,23 @@
-from BeautifulSoup import BeautifulSoup
 import requests
-import urllib2
-import re
 
-def ImageDownload(url):
-	#importing requirements
+def getImage(url):
+	client_id = "a235801b84ae3057163a384548acbb74f82dfc72ee2e8e9580637271ea1a7858"
+	list1 = url.split('/')
+	id = list1[-1]
+	endpoint = "https://api.unsplash.com/photos/"
+	actual_url = endpoint+id+"?"+"client_id="+client_id
+	
+	r_data = requests.get(actual_url)
+	r_dict=r_data.json()
+	image_url=r_dict['urls']['full']
 
-	html_page = urllib2.urlopen(url)
-	#opening the webpage
+	image = requests.get(image_url)
 
-	soup = BeautifulSoup(html_page)
-	#instance of the BeautifulSoup class
+	with open('image.jpg','wb') as f:
+		f.write(image.content)
 
-	images = []
-	#declaring the list
+	print("Download Completed !")	
 
-	for img in soup.findAll('img'):
-	    images.append(img.get('src'))
-	#getting the image source tags from the webpage
-
-	image_url = images[2]
-	#We found out that the image we want to download is at the index : 1
-
-	img_data = requests.get(image_url).content
-	with open('downloaded_image.jpg', 'wb') as handler:
-	    handler.write(img_data)
-	#downloading the image using requests
-
-
-if __name__ == "__main__":
-	url = "https://unsplash.com/photos/idQ9x2n_AMk"
-
-	ImageDownload(url)
-	#function to download the image
-
+if __name__ == '__main__':
+	url = input("Give the Image URL here: ")
+	getImage(url)
