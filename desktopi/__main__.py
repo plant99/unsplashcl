@@ -1,6 +1,9 @@
+import sys
 import subprocess
+import time
 import platform
 import os
+from daemons import daemonizer
 
 apple_script = """
 /usr/bin/osascript<<END
@@ -8,6 +11,9 @@ tell application "Finder"
     set desktop picture to POSIX file "%s"
 end tell
 END"""
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+pidfile = os.path.join(ROOT_DIR, 'wallpaper_daemon.pid')
 
 def isX64():
     import struct
@@ -40,11 +46,10 @@ def change_background(image_path):
     try: 
         if os_name == "Darwin":
             subprocess.check_call(apple_script % image_path, shell=True)
-            subprocess.check_call(["killall Dock"], shell=True)
 
         elif os_name == "Linux":
             desktop_env = get_linux_desktop_env()
-            uri = f'"file://{image_path}"'
+            uri = "file://%s" % image_path
 
             if desktop_env in ["gnome", "unity"]:
                 args = ["gsettings", "set", "org.gnome.desktop.background", "picture-uri", uri]
@@ -85,4 +90,33 @@ def change_background(image_path):
     
     except:
         raise Exception("Could Not Change Background")
+
+
+@daemonizer.run(pidfile=pidfile)
+def wallpaper_daemon(image_list, seconds):
+    num_images = len(image_list)
+    idx = 0
+    while True:
+        change_background(image_list[idx])
+        idx = (idx + 1) % num_images
+        time.sleep(seconds)
+
+
+def start_timed_wallpaper(image_list, seconds):
+    os_name = platform.system()
+    if os_name in ["Darwin", "Linux"]:
+        wallpaper_daemon(image_list, seconds)
+    else:
+        # Windows service
+        pass
+
+def stop_timed_wallpaper():
+    os_name = platform.system()
+    if os_name in ["Darwin", "Linux"]:
+        wallpaper_daemon.stop()
+    else:
+        # Stop Windows Service
+        pass
+
+
 
