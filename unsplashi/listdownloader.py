@@ -11,9 +11,9 @@ def getList(url):
 	r_dict=r_data.json()
 	for i in range(len(r_dict)):
 		image_url=r_dict[i]['urls']['full']
-		print(image_url)
 
 		image = requests.get(image_url)
+		print("Image "+str(i+1)+" ...")
 
 		with open('image'+str(i)+'.jpg','wb') as f:
 			f.write(image.content)
@@ -21,5 +21,5 @@ def getList(url):
 	print("Download Completed !")
 
 if __name__ == '__main__':
-	url = input("Give the collection URL here: ")
+	url = input("Give the collection URL with ID \nExample : https://unsplash.com/collections/2405765 \nURL:")
 	getList(url)
