@@ -13,12 +13,10 @@ def getList(url):
 		image_url=r_dict[i]['urls']['full']
 
 		image = requests.get(image_url)
-		print("Image "+str(i+1)+" ...")
 
 		with open('image'+str(i)+'.jpg','wb') as f:
 			f.write(image.content)
 
-	print("Download Completed !")
 
 if __name__ == '__main__':
 	url = input("Give the collection URL with ID \nExample : https://unsplash.com/collections/2405765 \nURL:")
