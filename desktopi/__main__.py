@@ -123,13 +123,11 @@ def stop_timed_wallpaper():
 
 # pos argument takes values: 
 # topleft(default), topright, bottomleft, bottomright, center
-def watermark_image(image_path, text, pos="topleft"):
+def watermark_image(image_path, text, pos="topleft", img_fraction=0.20, padding=3, coords=False):
     try:
         base = Image.open(image_path).convert('RGBA')
         base_width, base_height = base.size
                 
-        # watermark width = img_fraction * base_width
-        img_fraction = 0.20
         font_size = 1
         font_path = os.path.join(ROOT_DIR, "Montserrat-Regular.ttf")
         font = ImageFont.truetype(font_path, font_size)
@@ -141,22 +139,26 @@ def watermark_image(image_path, text, pos="topleft"):
         font = ImageFont.truetype(font_path, font_size)
         font_width, font_height = font.getsize(text)
         
-        padding = 3
-        coords = (padding, padding)
-        if pos == "topright":
-            coords = (base_width - font_width - padding, padding)
-        elif pos == "bottomleft":
-            coords = (padding, base_height - font_height - padding)
-        elif pos == "bottomright":
-            coords = (base_width - font_width - padding,
-                      base_height - font_height - padding)
-        elif pos == "center":
-            coords = (base_width / 2 - font_width / 2, base_height / 2 - font_height / 2)
-        
+        watermark_coords = (0, 0)
+        if coords == False:
+            if pos == "topright":
+                watermark_coords = (base_width - font_width - padding, padding)
+            elif pos == "bottomleft":
+                watermark_coords = (padding, base_height - font_height - padding)
+            elif pos == "bottomright":
+                watermark_coords = (base_width - font_width - padding, base_height - font_height - padding)
+            elif pos == "center":
+                watermark_coords = (base_width / 2 - font_width / 2, base_height / 2 - font_height / 2)
+
+        elif coords[0] >= 0 and coords[0] <= base_width and coords[1] >= 0 and coords[1] <= base_height:
+            watermark_coords = coords
+
         watermark = Image.new('RGBA', base.size, (255, 255, 255, 0))
+        
         drawing = ImageDraw.Draw(watermark)
-        drawing.text(coords, text, fill=(255, 255, 255, 128), font=font)
-        out = Image.alpha_composite(base, watermark)
+        drawing.text(watermark_coords, text, fill=(255, 255, 255, 128), font=font)
+        
+        out = Image.alpha_composite(base, watermark) 
         out = out.convert("RGB")
         out.save(image_path)
     
