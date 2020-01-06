@@ -21,3 +21,4 @@ def getList(url):
 if __name__ == '__main__':
 	url = input("Give the collection URL with ID \nExample : https://unsplash.com/collections/2405765 \nURL:")
 	getList(url)
+	
