@@ -13,8 +13,7 @@ def getList(url):
 	endpoint = "https://api.unsplash.com/collections/"
 	actual_url = endpoint+id+"/photos"+"?"+"client_id="+client_id
 
-	token = OAuth1Session(client_id,
-						client_secret)
+	token = OAuth1Session(client_id,client_secret)
 	r = token.get(actual_url)
 	r_dict = r.json()
 
