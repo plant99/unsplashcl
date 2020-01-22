@@ -6,14 +6,12 @@ import config
 
 
 def getList(url):
-	client_id = "a235801b84ae3057163a384548acbb74f82dfc72ee2e8e9580637271ea1a7858"
-	client_secret = "40fdf55a363dce20ef5475cd65938cffa1b7ec82a7c7cb3a58eb77fa9405ac53"
 	list1 = url.split('/')
 	id = list1[-1]
 	endpoint = "https://api.unsplash.com/collections/"
-	actual_url = endpoint+id+"/photos"+"?"+"client_id="+client_id
+	actual_url = endpoint+id+"/photos"+"?"+"client_id="+config.client_id
 
-	token = OAuth1Session(client_id,client_secret)
+	token = OAuth1Session(config.client_id,config.client_secret)
 	r = token.get(actual_url)
 	r_dict = r.json()
 
