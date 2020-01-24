@@ -3,6 +3,7 @@
 from requests_oauthlib import OAuth1Session
 import requests
 import config
+import sys
 
 
 def getList(url):
@@ -24,5 +25,5 @@ def getList(url):
 				f.write(image.content)
 
 if __name__ == '__main__':
-	url = input("Give the collection URL with ID \nExample : https://unsplash.com/collections/2405765 \nURL:")
+	url = sys.argv[1]
 	getList(url)
