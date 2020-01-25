@@ -28,5 +28,5 @@ def searchphotos(query):
 
 
 if __name__ == '__main__':
-	query = input("What do you want to search?")
+	query = input("Enter your Query")
 	searchphotos(query)
