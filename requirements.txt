@@ -8,4 +8,4 @@ lockfile==0.12.2
 Pillow==8.1.1
 pycodestyle==2.5.0
 requests==2.22.0
-urllib3==1.25.8
+urllib3==1.26.5
